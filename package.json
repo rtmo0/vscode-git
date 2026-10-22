@@ -1,0 +1,770 @@
+{
+  "name": "git-awesome",
+  "displayName": "Git Awesome — IDE-style Commit, Log & Branches",
+  "description": "Git the way JetBrains IDEs do it: a Commit tool window with checkboxes and changelists, a Log with graph and branch filters, a Branches popup, Push and Update Project dialogs, conflict resolution, shelf and blame.",
+  "version": "0.1.0",
+  "publisher": "samarin-aa-aka-rtm00",
+  "license": "MIT",
+  "preview": true,
+  "pricing": "Free",
+  "galleryBanner": {
+    "color": "#1f2430",
+    "theme": "dark"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rtmo0/vscode-git.git"
+  },
+  "homepage": "https://github.com/rtmo0/vscode-git#readme",
+  "bugs": {
+    "url": "https://github.com/rtmo0/vscode-git/issues"
+  },
+  "sponsor": {
+    "url": "https://boosty.to/rtm00"
+  },
+  "engines": {
+    "vscode": "^1.95.0"
+  },
+  "categories": [
+    "SCM Providers",
+    "Visualization",
+    "Other"
+  ],
+  "keywords": [
+    "git",
+    "jetbrains",
+    "intellij",
+    "commit",
+    "changelist",
+    "git log",
+    "git graph",
+    "branches",
+    "shelve",
+    "blame"
+  ],
+  "main": "./dist/extension.js",
+  "extensionKind": [
+    "workspace"
+  ],
+  "extensionDependencies": [
+    "vscode.git"
+  ],
+  "capabilities": {
+    "untrustedWorkspaces": {
+      "supported": false,
+      "description": "Git Awesome runs git commands that change the repository and therefore requires a trusted workspace."
+    },
+    "virtualWorkspaces": {
+      "supported": false,
+      "description": "Git Awesome needs a local git repository."
+    }
+  },
+  "activationEvents": [
+    "workspaceContains:.git"
+  ],
+  "contributes": {
+    "viewsContainers": {
+      "panel": [
+        {
+          "id": "git-awesome-commit",
+          "title": "Commit",
+          "icon": "media/activity.svg"
+        },
+        {
+          "id": "git-awesome-panel",
+          "title": "Git",
+          "icon": "media/activity.svg"
+        }
+      ]
+    },
+    "views": {
+      "git-awesome-commit": [
+        {
+          "id": "git-awesome.changes",
+          "name": "Changes",
+          "icon": "media/activity.svg",
+          "contextualTitle": "Commit"
+        },
+        {
+          "type": "webview",
+          "id": "git-awesome.commitMessage",
+          "name": "Commit Message",
+          "icon": "media/activity.svg",
+          "contextualTitle": "Commit"
+        }
+      ],
+      "git-awesome-panel": [
+        {
+          "type": "webview",
+          "id": "git-awesome.log",
+          "name": "Log",
+          "icon": "media/activity.svg",
+          "contextualTitle": "Git"
+        }
+      ]
+    },
+    "viewsWelcome": [
+      {
+        "view": "git-awesome.changes",
+        "contents": "No Git repository is open in this workspace.\n[Initialize Repository](command:git.init)\n[Clone Repository](command:git.clone)",
+        "when": "!git-awesome.hasRepositories"
+      }
+    ],
+    "commands": [
+      {
+        "command": "git-awesome.showOutput",
+        "title": "Show Output",
+        "category": "Git Awesome",
+        "icon": "$(output)"
+      },
+      {
+        "command": "git-awesome.refresh",
+        "title": "Refresh",
+        "category": "Git Awesome",
+        "icon": "$(refresh)"
+      },
+      {
+        "command": "git-awesome.fetch",
+        "title": "Fetch",
+        "category": "Git Awesome",
+        "icon": "$(repo-fetch)"
+      },
+      {
+        "command": "git-awesome.updateProject",
+        "title": "Update Project…",
+        "category": "Git Awesome",
+        "icon": "$(arrow-down)"
+      },
+      {
+        "command": "git-awesome.push",
+        "title": "Push…",
+        "category": "Git Awesome",
+        "icon": "$(arrow-up)"
+      },
+      {
+        "command": "git-awesome.branches",
+        "title": "Branches…",
+        "category": "Git Awesome",
+        "icon": "$(git-branch)"
+      },
+      {
+        "command": "git-awesome.showLog",
+        "title": "Show Git Log",
+        "category": "Git Awesome",
+        "icon": "$(git-commit)"
+      },
+      {
+        "command": "git-awesome.newBranch",
+        "title": "New Branch…",
+        "category": "Git Awesome",
+        "icon": "$(add)"
+      },
+      {
+        "command": "git-awesome.newTag",
+        "title": "New Tag…",
+        "category": "Git Awesome",
+        "icon": "$(tag)"
+      },
+      {
+        "command": "git-awesome.checkoutRevision",
+        "title": "Checkout Tag or Revision…",
+        "category": "Git Awesome",
+        "icon": "$(tag)"
+      },
+      {
+        "command": "git-awesome.commit",
+        "title": "Commit",
+        "category": "Git Awesome",
+        "icon": "$(check)"
+      },
+      {
+        "command": "git-awesome.commitAndPush",
+        "title": "Commit and Push…",
+        "category": "Git Awesome",
+        "icon": "$(repo-push)"
+      },
+      {
+        "command": "git-awesome.showDiff",
+        "title": "Show Diff",
+        "category": "Git Awesome",
+        "icon": "$(diff)"
+      },
+      {
+        "command": "git-awesome.showAllChanges",
+        "title": "Show All Changes",
+        "category": "Git Awesome",
+        "icon": "$(diff-multiple)"
+      },
+      {
+        "command": "git-awesome.openFile",
+        "title": "Jump to Source",
+        "category": "Git Awesome",
+        "icon": "$(go-to-file)"
+      },
+      {
+        "command": "git-awesome.rollback",
+        "title": "Rollback…",
+        "category": "Git Awesome",
+        "icon": "$(discard)"
+      },
+      {
+        "command": "git-awesome.addToVcs",
+        "title": "Add to VCS",
+        "category": "Git Awesome",
+        "icon": "$(add)"
+      },
+      {
+        "command": "git-awesome.deleteUnversioned",
+        "title": "Delete…",
+        "category": "Git Awesome",
+        "icon": "$(trash)"
+      },
+      {
+        "command": "git-awesome.addToGitignore",
+        "title": "Add to .gitignore",
+        "category": "Git Awesome",
+        "icon": "$(eye-closed)"
+      },
+      {
+        "command": "git-awesome.groupByDirectory",
+        "title": "Group by Directory",
+        "category": "Git Awesome",
+        "icon": "$(list-tree)"
+      },
+      {
+        "command": "git-awesome.groupFlat",
+        "title": "Show Flat List",
+        "category": "Git Awesome",
+        "icon": "$(list-flat)"
+      },
+      {
+        "command": "git-awesome.resolveConflicts",
+        "title": "Resolve Conflicts…",
+        "category": "Git Awesome",
+        "icon": "$(git-merge)"
+      },
+      {
+        "command": "git-awesome.mergeConflict",
+        "title": "Merge…",
+        "category": "Git Awesome",
+        "icon": "$(git-merge)"
+      },
+      {
+        "command": "git-awesome.acceptYours",
+        "title": "Accept Yours",
+        "category": "Git Awesome",
+        "icon": "$(arrow-left)"
+      },
+      {
+        "command": "git-awesome.acceptTheirs",
+        "title": "Accept Theirs",
+        "category": "Git Awesome",
+        "icon": "$(arrow-right)"
+      },
+      {
+        "command": "git-awesome.markResolved",
+        "title": "Mark as Resolved",
+        "category": "Git Awesome",
+        "icon": "$(check)"
+      },
+      {
+        "command": "git-awesome.continueOperation",
+        "title": "Continue",
+        "category": "Git Awesome",
+        "icon": "$(debug-continue)"
+      },
+      {
+        "command": "git-awesome.abortOperation",
+        "title": "Abort…",
+        "category": "Git Awesome",
+        "icon": "$(debug-stop)"
+      },
+      {
+        "command": "git-awesome.skipCommit",
+        "title": "Skip Commit",
+        "category": "Git Awesome",
+        "icon": "$(debug-step-over)"
+      }
+    ],
+    "menus": {
+      "view/title": [
+        {
+          "command": "git-awesome.refresh",
+          "when": "view == git-awesome.changes",
+          "group": "navigation@1"
+        },
+        {
+          "command": "git-awesome.fetch",
+          "when": "view == git-awesome.changes",
+          "group": "navigation@2"
+        },
+        {
+          "command": "git-awesome.updateProject",
+          "when": "view == git-awesome.changes",
+          "group": "navigation@3"
+        },
+        {
+          "command": "git-awesome.push",
+          "when": "view == git-awesome.changes",
+          "group": "navigation@4"
+        },
+        {
+          "command": "git-awesome.branches",
+          "when": "view == git-awesome.changes",
+          "group": "navigation@5"
+        },
+        {
+          "command": "git-awesome.showLog",
+          "when": "view == git-awesome.changes",
+          "group": "navigation@5"
+        },
+        {
+          "command": "git-awesome.showAllChanges",
+          "when": "view == git-awesome.changes",
+          "group": "navigation@6"
+        },
+        {
+          "command": "git-awesome.groupFlat",
+          "when": "view == git-awesome.changes && config.git-awesome.changes.groupByDirectory",
+          "group": "1_view@1"
+        },
+        {
+          "command": "git-awesome.groupByDirectory",
+          "when": "view == git-awesome.changes && !config.git-awesome.changes.groupByDirectory",
+          "group": "1_view@1"
+        },
+        {
+          "command": "git-awesome.newBranch",
+          "when": "view == git-awesome.changes",
+          "group": "2_branch@1"
+        },
+        {
+          "command": "git-awesome.newTag",
+          "when": "view == git-awesome.changes",
+          "group": "2_branch@2"
+        },
+        {
+          "command": "git-awesome.checkoutRevision",
+          "when": "view == git-awesome.changes",
+          "group": "2_branch@3"
+        },
+        {
+          "command": "git-awesome.showOutput",
+          "when": "view == git-awesome.changes",
+          "group": "9_output@1"
+        },
+        {
+          "command": "git-awesome.refresh",
+          "when": "view == git-awesome.log",
+          "group": "navigation@1"
+        },
+        {
+          "command": "git-awesome.fetch",
+          "when": "view == git-awesome.log",
+          "group": "navigation@2"
+        },
+        {
+          "command": "git-awesome.updateProject",
+          "when": "view == git-awesome.log",
+          "group": "navigation@3"
+        },
+        {
+          "command": "git-awesome.push",
+          "when": "view == git-awesome.log",
+          "group": "navigation@4"
+        },
+        {
+          "command": "git-awesome.branches",
+          "when": "view == git-awesome.log",
+          "group": "navigation@5"
+        },
+        {
+          "command": "git-awesome.newBranch",
+          "when": "view == git-awesome.log",
+          "group": "2_branch@1"
+        },
+        {
+          "command": "git-awesome.newTag",
+          "when": "view == git-awesome.log",
+          "group": "2_branch@2"
+        },
+        {
+          "command": "git-awesome.checkoutRevision",
+          "when": "view == git-awesome.log",
+          "group": "2_branch@3"
+        }
+      ],
+      "view/item/context": [
+        {
+          "command": "git-awesome.rollback",
+          "when": "view == git-awesome.changes && viewItem =~ /^(file|dir|group)-changes/",
+          "group": "inline@1"
+        },
+        {
+          "command": "git-awesome.addToVcs",
+          "when": "view == git-awesome.changes && viewItem =~ /^(file|dir|group)-unversioned/",
+          "group": "inline@1"
+        },
+        {
+          "command": "git-awesome.acceptYours",
+          "when": "view == git-awesome.changes && viewItem =~ /^file-conflicts/",
+          "group": "inline@1"
+        },
+        {
+          "command": "git-awesome.acceptTheirs",
+          "when": "view == git-awesome.changes && viewItem =~ /^file-conflicts/",
+          "group": "inline@2"
+        },
+        {
+          "command": "git-awesome.mergeConflict",
+          "when": "view == git-awesome.changes && viewItem =~ /^file-conflicts/",
+          "group": "inline@3"
+        },
+        {
+          "command": "git-awesome.resolveConflicts",
+          "when": "view == git-awesome.changes && viewItem =~ /^group-conflicts/",
+          "group": "inline@1"
+        },
+        {
+          "command": "git-awesome.continueOperation",
+          "when": "view == git-awesome.changes && viewItem =~ /^operation/",
+          "group": "inline@1"
+        },
+        {
+          "command": "git-awesome.abortOperation",
+          "when": "view == git-awesome.changes && viewItem =~ /^operation/",
+          "group": "inline@2"
+        },
+        {
+          "command": "git-awesome.showDiff",
+          "when": "view == git-awesome.changes && viewItem =~ /^(file|dir|group)-(changes|unversioned)/",
+          "group": "1_diff@1"
+        },
+        {
+          "command": "git-awesome.openFile",
+          "when": "view == git-awesome.changes && viewItem =~ /^file-/",
+          "group": "1_diff@2"
+        },
+        {
+          "command": "git-awesome.mergeConflict",
+          "when": "view == git-awesome.changes && viewItem =~ /^file-conflicts/",
+          "group": "2_conflicts@1"
+        },
+        {
+          "command": "git-awesome.acceptYours",
+          "when": "view == git-awesome.changes && viewItem =~ /^(file|dir|group)-conflicts/",
+          "group": "2_conflicts@2"
+        },
+        {
+          "command": "git-awesome.acceptTheirs",
+          "when": "view == git-awesome.changes && viewItem =~ /^(file|dir|group)-conflicts/",
+          "group": "2_conflicts@3"
+        },
+        {
+          "command": "git-awesome.markResolved",
+          "when": "view == git-awesome.changes && viewItem =~ /^(file|dir|group)-conflicts/",
+          "group": "2_conflicts@4"
+        },
+        {
+          "command": "git-awesome.resolveConflicts",
+          "when": "view == git-awesome.changes && viewItem =~ /^group-conflicts/",
+          "group": "2_conflicts@5"
+        },
+        {
+          "command": "git-awesome.rollback",
+          "when": "view == git-awesome.changes && viewItem =~ /^(file|dir|group)-changes/",
+          "group": "3_change@1"
+        },
+        {
+          "command": "git-awesome.addToVcs",
+          "when": "view == git-awesome.changes && viewItem =~ /^(file|dir|group)-unversioned/",
+          "group": "3_change@1"
+        },
+        {
+          "command": "git-awesome.addToGitignore",
+          "when": "view == git-awesome.changes && viewItem =~ /^(file|dir|group)-unversioned/",
+          "group": "3_change@2"
+        },
+        {
+          "command": "git-awesome.deleteUnversioned",
+          "when": "view == git-awesome.changes && viewItem =~ /^(file|dir|group)-unversioned/",
+          "group": "3_change@3"
+        },
+        {
+          "command": "git-awesome.continueOperation",
+          "when": "view == git-awesome.changes && viewItem =~ /^operation/",
+          "group": "1_operation@1"
+        },
+        {
+          "command": "git-awesome.skipCommit",
+          "when": "view == git-awesome.changes && viewItem =~ /^operation-rebase/",
+          "group": "1_operation@2"
+        },
+        {
+          "command": "git-awesome.abortOperation",
+          "when": "view == git-awesome.changes && viewItem =~ /^operation/",
+          "group": "1_operation@3"
+        }
+      ],
+      "commandPalette": [
+        {
+          "command": "git-awesome.showDiff",
+          "when": "false"
+        },
+        {
+          "command": "git-awesome.openFile",
+          "when": "false"
+        },
+        {
+          "command": "git-awesome.rollback",
+          "when": "false"
+        },
+        {
+          "command": "git-awesome.addToVcs",
+          "when": "false"
+        },
+        {
+          "command": "git-awesome.deleteUnversioned",
+          "when": "false"
+        },
+        {
+          "command": "git-awesome.addToGitignore",
+          "when": "false"
+        },
+        {
+          "command": "git-awesome.mergeConflict",
+          "when": "false"
+        },
+        {
+          "command": "git-awesome.acceptYours",
+          "when": "false"
+        },
+        {
+          "command": "git-awesome.acceptTheirs",
+          "when": "false"
+        },
+        {
+          "command": "git-awesome.markResolved",
+          "when": "false"
+        },
+        {
+          "command": "git-awesome.groupByDirectory",
+          "when": "false"
+        },
+        {
+          "command": "git-awesome.groupFlat",
+          "when": "false"
+        },
+        {
+          "command": "git-awesome.refresh",
+          "when": "git-awesome.hasRepositories"
+        },
+        {
+          "command": "git-awesome.fetch",
+          "when": "git-awesome.hasRepositories"
+        },
+        {
+          "command": "git-awesome.updateProject",
+          "when": "git-awesome.hasRepositories"
+        },
+        {
+          "command": "git-awesome.push",
+          "when": "git-awesome.hasRepositories"
+        },
+        {
+          "command": "git-awesome.branches",
+          "when": "git-awesome.hasRepositories"
+        },
+        {
+          "command": "git-awesome.newBranch",
+          "when": "git-awesome.hasRepositories"
+        },
+        {
+          "command": "git-awesome.checkoutRevision",
+          "when": "git-awesome.hasRepositories"
+        },
+        {
+          "command": "git-awesome.commit",
+          "when": "git-awesome.hasRepositories"
+        },
+        {
+          "command": "git-awesome.commitAndPush",
+          "when": "git-awesome.hasRepositories"
+        },
+        {
+          "command": "git-awesome.showAllChanges",
+          "when": "git-awesome.hasRepositories"
+        },
+        {
+          "command": "git-awesome.resolveConflicts",
+          "when": "git-awesome.hasRepositories"
+        },
+        {
+          "command": "git-awesome.continueOperation",
+          "when": "git-awesome.hasRepositories"
+        },
+        {
+          "command": "git-awesome.abortOperation",
+          "when": "git-awesome.hasRepositories"
+        },
+        {
+          "command": "git-awesome.skipCommit",
+          "when": "git-awesome.hasRepositories"
+        },
+        {
+          "command": "git-awesome.showLog",
+          "when": "git-awesome.hasRepositories"
+        },
+        {
+          "command": "git-awesome.newTag",
+          "when": "git-awesome.hasRepositories"
+        }
+      ]
+    },
+    "keybindings": [
+      {
+        "command": "git-awesome.updateProject",
+        "key": "ctrl+t",
+        "mac": "cmd+t",
+        "when": "config.git-awesome.jetbrainsKeymap && git-awesome.hasRepositories"
+      },
+      {
+        "command": "git-awesome.push",
+        "key": "ctrl+shift+k",
+        "mac": "cmd+shift+k",
+        "when": "config.git-awesome.jetbrainsKeymap && git-awesome.hasRepositories"
+      },
+      {
+        "command": "git-awesome.branches",
+        "key": "ctrl+shift+`",
+        "mac": "ctrl+shift+`",
+        "when": "config.git-awesome.jetbrainsKeymap && git-awesome.hasRepositories"
+      },
+      {
+        "command": "git-awesome.commitMessage.focus",
+        "key": "ctrl+k",
+        "mac": "cmd+k",
+        "when": "config.git-awesome.jetbrainsKeymap && git-awesome.hasRepositories && !editorTextFocus"
+      },
+      {
+        "command": "git-awesome.showLog",
+        "key": "alt+9",
+        "mac": "cmd+9",
+        "when": "config.git-awesome.jetbrainsKeymap"
+      }
+    ],
+    "configuration": {
+      "title": "Git Awesome",
+      "properties": {
+        "git-awesome.changes.groupByDirectory": {
+          "type": "boolean",
+          "default": true,
+          "description": "Group changed files by directory in the Changes view."
+        },
+        "git-awesome.jetbrainsKeymap": {
+          "type": "boolean",
+          "default": false,
+          "markdownDescription": "Enable JetBrains Git shortcuts: `Ctrl+T`/`⌘T` Update Project, `Ctrl+Shift+K`/`⌘⇧K` Push, ``Ctrl+Shift+` `` Branches, `Ctrl+K`/`⌘K` Commit (outside the editor), `Alt+9`/`⌘9` Git Log. They override the VS Code bindings of these keys."
+        },
+        "git-awesome.jetbrainsColors": {
+          "type": "boolean",
+          "default": true,
+          "markdownDescription": "Color changed files in the Explorer, editor tabs, the Changes view and the Log with the JetBrains file status colors: modified blue, added green, deleted grey, unversioned red-brown, conflicts red. The colors are theme colors `gitAwesome.*` and can be changed in `workbench.colorCustomizations`."
+        }
+      }
+    },
+    "colors": [
+      {
+        "id": "gitAwesome.modifiedForeground",
+        "description": "Modified files (JetBrains: blue).",
+        "defaults": {
+          "dark": "#6897BB",
+          "light": "#0032A0",
+          "highContrast": "#8FB8FF",
+          "highContrastLight": "#0032A0"
+        }
+      },
+      {
+        "id": "gitAwesome.addedForeground",
+        "description": "Files added to Git (JetBrains: green).",
+        "defaults": {
+          "dark": "#629755",
+          "light": "#067D17",
+          "highContrast": "#8BD17C",
+          "highContrastLight": "#067D17"
+        }
+      },
+      {
+        "id": "gitAwesome.deletedForeground",
+        "description": "Deleted files (JetBrains: grey).",
+        "defaults": {
+          "dark": "#808080",
+          "light": "#8C8C8C",
+          "highContrast": "#B0B0B0",
+          "highContrastLight": "#6C6C6C"
+        }
+      },
+      {
+        "id": "gitAwesome.renamedForeground",
+        "description": "Renamed or moved files (JetBrains: blue).",
+        "defaults": {
+          "dark": "#6897BB",
+          "light": "#0032A0",
+          "highContrast": "#8FB8FF",
+          "highContrastLight": "#0032A0"
+        }
+      },
+      {
+        "id": "gitAwesome.unversionedForeground",
+        "description": "Unversioned files (JetBrains: red-brown).",
+        "defaults": {
+          "dark": "#D1675A",
+          "light": "#993300",
+          "highContrast": "#FF8C7A",
+          "highContrastLight": "#993300"
+        }
+      },
+      {
+        "id": "gitAwesome.ignoredForeground",
+        "description": "Ignored files (JetBrains: olive).",
+        "defaults": {
+          "dark": "#848504",
+          "light": "#808000",
+          "highContrast": "#C8C83C",
+          "highContrastLight": "#6B6B00"
+        }
+      },
+      {
+        "id": "gitAwesome.conflictForeground",
+        "description": "Files with merge conflicts (JetBrains: red).",
+        "defaults": {
+          "dark": "#D5756C",
+          "light": "#CC0000",
+          "highContrast": "#FF7B72",
+          "highContrastLight": "#CC0000"
+        }
+      }
+    ]
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run check && npm run build -- --production",
+    "build": "node esbuild.js",
+    "watch": "node esbuild.js --watch",
+    "compile": "tsc -p ./ --noEmit",
+    "typecheck": "tsc -p ./ --noEmit && tsc -p tsconfig.test.json",
+    "check": "npm run typecheck",
+    "test": "node esbuild.test.js && node --test out/test/*.test.js",
+    "test:integration": "bash test/integration/run.sh",
+    "package": "vsce package --no-dependencies",
+    "package:list": "vsce ls --no-dependencies",
+    "lint": "tsc -p ./ --noEmit"
+  },
+  "devDependencies": {
+    "@types/node": "^20.14.0",
+    "@types/vscode": "~1.95.0",
+    "@vscode/vsce": "^4.0.0",
+    "esbuild": "^0.28.2",
+    "typescript": "^5.9.3"
+  },
+  "icon": "media/icon.png"
+}

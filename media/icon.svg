@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#8b5cf6"/>
+      <stop offset="1" stop-color="#1e3a8a"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Rounded background -->
+  <rect width="256" height="256" rx="56" fill="url(#bg)"/>
+
+  <!-- Commit graph: main line with a feature branch merged back -->
+  <path d="M92 60 V196" stroke="#ffffff" stroke-width="14" stroke-linecap="round" fill="none"/>
+  <path d="M92 76 C92 112 160 96 160 128 C160 160 92 148 92 184" stroke="#fbbf24" stroke-width="14" stroke-linecap="round" fill="none"/>
+  <circle cx="92" cy="64" r="20" fill="#ffffff"/>
+  <circle cx="92" cy="64" r="9" fill="#4c1d95"/>
+  <circle cx="160" cy="128" r="20" fill="#fbbf24"/>
+  <circle cx="160" cy="128" r="9" fill="#4c1d95"/>
+  <circle cx="92" cy="192" r="20" fill="#ffffff"/>
+  <circle cx="92" cy="192" r="9" fill="#4c1d95"/>
+
+  <!-- Commit check badge -->
+  <circle cx="190" cy="192" r="40" fill="#22c55e" stroke="#1e3a8a" stroke-width="6"/>
+  <path d="M171 193 L185 207 L210 179" stroke="#ffffff" stroke-width="12" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+</svg>
