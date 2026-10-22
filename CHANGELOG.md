@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.2.1
+
+- The Commit tool window is back in the bottom panel; no Activity Bar icon.
+- Clicking the branch in the status bar opens the Git tool window instead of the Git Branches popup.
+
 ## 0.2.0
 
 - Changes view: selecting a file (mouse or `↑`/`↓`) previews its diff and keeps focus in the tree.

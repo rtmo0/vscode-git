@@ -19,7 +19,7 @@ The **Git** panel (next to Terminal, opened automatically the first time, or **G
 
 ## Commit tool window
 
-Open **Commit** in the Activity Bar on the left, as in JetBrains IDEs: the changes tree on top, the message and buttons below, and the whole editor area free for diffs.
+Open the **Commit** tab in the bottom panel (next to Terminal and **Git**): the changes tree on the left, the message and buttons on the right.
 
 - **Changes** lists *Merge Conflicts*, *Changes* and *Unversioned Files*, grouped by directory (or flat). Checkboxes choose what goes into the commit: tracked changes are checked by default, unversioned files are not — exactly as in JetBrains IDEs. Nothing has to be staged.
 - **Diff preview**: click a file or move through the tree with `↑`/`↓` — its diff opens in the preview editor while focus stays in the tree, so you can walk the whole change list from the keyboard.
@@ -30,7 +30,7 @@ Open **Commit** in the Activity Bar on the left, as in JetBrains IDEs: the chang
 
 ## Branches, Update and Push
 
-- The branch in the status bar (and the toolbar button) opens **Git Branches**: Update Project, Commit, Push, New Branch, Checkout Tag or Revision, Fetch, then *Recent*, *Local* and *Remote* branches.
+- The branch in the status bar opens the **Git** tool window; the toolbar button (or **Git Awesome: Branches…**) opens **Git Branches**: Update Project, Commit, Push, New Branch, Checkout Tag or Revision, Fetch, then *Recent*, *Local* and *Remote* branches.
 - Per branch: **Checkout**, **New Branch from…**, **Checkout and Rebase onto current**, **Compare with current**, **Show Diff with Working Tree**, **Rebase current onto…**, **Merge into current**, **Pull into current Using Merge/Rebase**, **Rename…**, **Delete** (with **Restore**).
 - **Smart Checkout**: when local changes would be overwritten, they are stashed, the branch is checked out and the changes are restored. **Force Checkout** discards them.
 - **Update Project…** fetches and merges or rebases every repository onto its tracked branch; uncommitted changes are stashed and restored automatically.
