@@ -64,12 +64,14 @@
   ],
   "contributes": {
     "viewsContainers": {
-      "panel": [
+      "activitybar": [
         {
           "id": "git-awesome-commit",
           "title": "Commit",
           "icon": "media/activity.svg"
-        },
+        }
+      ],
+      "panel": [
         {
           "id": "git-awesome-panel",
           "title": "Git",
@@ -194,6 +196,18 @@
         "title": "Show All Changes",
         "category": "Git Awesome",
         "icon": "$(diff-multiple)"
+      },
+      {
+        "command": "git-awesome.previousChangedFile",
+        "title": "Previous Changed File",
+        "category": "Git Awesome",
+        "icon": "$(arrow-circle-up)"
+      },
+      {
+        "command": "git-awesome.nextChangedFile",
+        "title": "Next Changed File",
+        "category": "Git Awesome",
+        "icon": "$(arrow-circle-down)"
       },
       {
         "command": "git-awesome.openFile",
@@ -506,6 +520,18 @@
           "group": "1_operation@3"
         }
       ],
+      "editor/title": [
+        {
+          "command": "git-awesome.previousChangedFile",
+          "when": "git-awesome.changesDiff",
+          "group": "navigation@-2"
+        },
+        {
+          "command": "git-awesome.nextChangedFile",
+          "when": "git-awesome.changesDiff",
+          "group": "navigation@-1"
+        }
+      ],
       "commandPalette": [
         {
           "command": "git-awesome.showDiff",
@@ -617,6 +643,14 @@
         },
         {
           "command": "git-awesome.newTag",
+          "when": "git-awesome.hasRepositories"
+        },
+        {
+          "command": "git-awesome.previousChangedFile",
+          "when": "git-awesome.hasRepositories"
+        },
+        {
+          "command": "git-awesome.nextChangedFile",
           "when": "git-awesome.hasRepositories"
         }
       ]

@@ -91,6 +91,7 @@ function directoryTree(files: FileNode[], base: string): Node[] {
 export class ChangesTree implements vscode.TreeDataProvider<Node>, vscode.Disposable {
   readonly view: vscode.TreeView<Node>;
   private roots: Node[] = [];
+  private readonly parents = new Map<Node, Node>();
   private readonly changed = new vscode.EventEmitter<void>();
   readonly onDidChangeTreeData = this.changed.event;
   private readonly disposables: vscode.Disposable[];
@@ -155,6 +156,13 @@ export class ChangesTree implements vscode.TreeDataProvider<Node>, vscode.Dispos
     this.inclusion.prune(repos);
     this.roots =
       repos.length === 1 ? this.repoNodes(repos[0]) : repos.map((repo) => ({ type: 'repo' as const, repo, children: this.repoNodes(repo) }));
+    this.parents.clear();
+    const link = (node: Node) =>
+      this.getChildren(node).forEach((child) => {
+        this.parents.set(child, node);
+        link(child);
+      });
+    this.roots.forEach(link);
 
     const single = repos.length === 1 ? repos[0] : undefined;
     const { ahead, behind } = single?.status.branch ?? { ahead: 0, behind: 0 };
@@ -244,8 +252,16 @@ export class ChangesTree implements vscode.TreeDataProvider<Node>, vscode.Dispos
     }
   }
 
-  getParent(): undefined {
-    return undefined;
+  getParent(node: Node): Node | undefined {
+    return this.parents.get(node);
+  }
+
+  /** Files in the order the tree shows them, for stepping through diffs. */
+  displayedFiles(): FileNode[] {
+    const result: FileNode[] = [];
+    const visit = (node: Node) => (node.type === 'file' ? result.push(node) : this.getChildren(node).forEach(visit));
+    this.roots.forEach(visit);
+    return result;
   }
 
   /** Nodes a command applies to: the clicked node with the selection it belongs to, or the selection. */

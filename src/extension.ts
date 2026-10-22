@@ -10,6 +10,7 @@ import { Repository, RepositoryManager } from './repository';
 import { FileColors } from './decorations';
 import { BranchStatusBar } from './statusBar';
 import { guarded } from './ui';
+import { ChangesReview } from './views/changesReview';
 import { ChangesTree, FileNode, filesOf, Node } from './views/changesTree';
 import { CommitView } from './views/commitView';
 import { LOG_VIEW_ID, LogView } from './views/logView';
@@ -18,6 +19,7 @@ import { LOG_VIEW_ID, LogView } from './views/logView';
 export interface TestApi {
   manager: RepositoryManager;
   tree: ChangesTree;
+  review: ChangesReview;
   colors: FileColors;
 }
 
@@ -37,6 +39,7 @@ export async function activate(context: vscode.ExtensionContext): Promise<TestAp
   const manager = new RepositoryManager(api, output);
   const inclusion = new Inclusion(context.workspaceState);
   const tree = new ChangesTree(manager, inclusion);
+  const review = new ChangesReview(tree);
   const commitView = new CommitView(manager, inclusion, context.workspaceState, context.globalState);
   const state = context.globalState;
   const colors = new FileColors(manager);
@@ -46,6 +49,7 @@ export async function activate(context: vscode.ExtensionContext): Promise<TestAp
     manager,
     inclusion,
     tree,
+    review,
     commitView,
     new BranchStatusBar(manager),
     colors,
@@ -85,12 +89,14 @@ export async function activate(context: vscode.ExtensionContext): Promise<TestAp
 
     'git-awesome.showDiff': async (node?: Node, selected?: readonly Node[]) => {
       const targets = files(node, selected);
-      if (targets.length === 1 && targets[0].group === 'conflicts') {
-        return merge(targets[0].repo, targets[0].change);
+      if (targets.length === 1) {
+        return targets[0].group === 'conflicts' ? merge(targets[0].repo, targets[0].change) : review.preview(targets[0]);
       }
       const items = targets.filter((f) => f.group !== 'conflicts').map((f) => workingTreeDiff(f.repo, f.change));
       return openDiffs('Changes', items);
     },
+    'git-awesome.nextChangedFile': () => review.step(1),
+    'git-awesome.previousChangedFile': () => review.step(-1),
     'git-awesome.showAllChanges': () =>
       openDiffs(
         'All Changes',
@@ -163,7 +169,7 @@ export async function activate(context: vscode.ExtensionContext): Promise<TestAp
     });
     context.subscriptions.push(showOnce);
   }
-  return { manager, tree, colors };
+  return { manager, tree, review, colors };
 }
 
 export function deactivate(): void {}

@@ -19,10 +19,12 @@ The **Git** panel (next to Terminal, opened automatically the first time, or **G
 
 ## Commit tool window
 
-Open the **Commit** tab in the bottom panel (next to Terminal and **Git**): the changes tree on the left, the message and buttons on the right.
+Open **Commit** in the Activity Bar on the left, as in JetBrains IDEs: the changes tree on top, the message and buttons below, and the whole editor area free for diffs.
 
 - **Changes** lists *Merge Conflicts*, *Changes* and *Unversioned Files*, grouped by directory (or flat). Checkboxes choose what goes into the commit: tracked changes are checked by default, unversioned files are not — exactly as in JetBrains IDEs. Nothing has to be staged.
-- Click a file to see its diff; select several files (or a folder) and use **Show Diff** for the multi-file diff editor. **Show All Changes** in the toolbar opens every change at once.
+- **Diff preview**: click a file or move through the tree with `↑`/`↓` — its diff opens in the preview editor while focus stays in the tree, so you can walk the whole change list from the keyboard.
+- In an open diff, **Previous Changed File** / **Next Changed File** (arrows in the editor title) step to the neighbouring file and select it in the tree.
+- Select several files (or a folder) and use **Show Diff** for the multi-file diff editor. **Show All Changes** in the toolbar opens every change at once.
 - **Commit Message**: **Commit**, **Commit and Push…**, **Amend** (brings back the last message), **History…** of your messages, `⌘Enter`/`Ctrl+Enter` to commit. Merge and cherry-pick messages are prefilled.
 - Context menu: **Rollback…** (added files stay on disk as unversioned), **Add to VCS**, **Add to .gitignore**, **Delete…** (to trash), **Jump to Source**.
 

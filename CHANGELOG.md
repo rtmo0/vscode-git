@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased
+
+- Changes view: selecting a file (mouse or `↑`/`↓`) previews its diff and keeps focus in the tree.
+- Previous / Next Changed File in the diff editor title step through the changes in tree order.
+- The Commit tool window moved from the bottom panel to the Activity Bar on the left, so diffs get the full editor area.
+
 ## 0.1.0
 
 - Git tool window with the Log: branches and tags tree, commit graph with labels, filters, commit details and context menus for branches, tags and commits.

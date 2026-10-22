@@ -41,6 +41,17 @@ exports.run = async () => {
   assert.strictEqual(colorOf('conflict.txt'), 'gitAwesome.conflictForeground');
   assert.strictEqual(colorOf('README.md'), undefined);
 
+  // Reviewing: Next/Previous Changed File step through the diffs in tree order, skip conflicts and select the file in the tree.
+  assert.deepStrictEqual(tree.displayedFiles().map((f) => f.change.path), ['conflict.txt', 'src/git/a.ts', 'src/b.ts', 'docs/notes.md']);
+  await vscode.commands.executeCommand('git-awesome.changes.focus');
+  const activeTab = () => vscode.window.tabGroups.activeTabGroup.activeTab?.label;
+  await vscode.commands.executeCommand('git-awesome.nextChangedFile');
+  await until(() => activeTab() === 'a.ts (HEAD ↔ Local)', 'the first diff');
+  await vscode.commands.executeCommand('git-awesome.previousChangedFile');
+  await until(() => activeTab() === 'notes.md (HEAD ↔ Local)', 'the last diff');
+  assert.deepStrictEqual(tree.view.selection.map((n) => n.change.path), ['docs/notes.md']);
+  await vscode.commands.executeCommand('workbench.action.closeAllEditors');
+
   const conflict = tree.getChildren(tree.getChildren().find((n) => n.group === 'conflicts'))[0];
   await vscode.commands.executeCommand('git-awesome.acceptTheirs', conflict);
   await until(() => repo.conflicts.length === 0, 'the conflict to be resolved');
