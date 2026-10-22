@@ -2,7 +2,7 @@
   "name": "git-awesome",
   "displayName": "Git Awesome — IDE-style Commit, Log & Branches",
   "description": "Git the way JetBrains IDEs do it: a Commit tool window with checkboxes and changelists, a Log with graph and branch filters, a Branches popup, Push and Update Project dialogs, conflict resolution, shelf and blame.",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "publisher": "samarin-aa-aka-rtm00",
   "license": "MIT",
   "preview": true,

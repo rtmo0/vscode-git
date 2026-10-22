@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 0.2.0
 
 - Changes view: selecting a file (mouse or `↑`/`↓`) previews its diff and keeps focus in the tree.
 - Previous / Next Changed File in the diff editor title step through the changes in tree order.
